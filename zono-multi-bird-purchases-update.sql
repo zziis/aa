@@ -144,10 +144,8 @@ begin
     where id = auth.uid()
     for update;
 
-    -- يسمح بنفس المستوى مرة أخرى، لكن يمنع الرجوع إلى مستوى أقدم.
-    if v_new_rank < coalesce(v_current_rank, 0) then
-        raise exception 'لا يمكن شراء طائر أقدم من طائرك الحالي';
-    end if;
+    -- يمكن شراء أي طائر مرة أخرى لزيادة الإنتاج.
+    -- الشكل الحالي لا يرجع للخلف؛ يبقى أعلى مستوى تم الوصول إليه.
 
     if coalesce(v_balance, 0) < v_price then
         raise exception 'رصيد البذور غير كافٍ';
